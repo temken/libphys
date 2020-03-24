@@ -1,3 +1,11 @@
+*.DS_Store
+.depend
+
+# Ignore codecove files
+*.gcov
+*.gcda
+*.gcno
+
 # Prerequisites
 *.d
 
