@@ -1,1 +1,0 @@
-This folder contains the object files (*.o) after compilation.

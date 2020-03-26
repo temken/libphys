@@ -1,5 +1,6 @@
 *.DS_Store
 .depend
+*tests
 
 # Ignore codecove files
 *.gcov
