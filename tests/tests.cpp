@@ -16,6 +16,7 @@ int main()
 	//1. Tests of functions in Linear_Algebra.hpp"
 	Vector v({1,3,5});
 	std::cout<<v<<std::endl;
+	std::cout<<v*v<<std::endl;
 	
 	//Ending time and computing time
 	std::chrono::high_resolution_clock::time_point time_end = std::chrono::high_resolution_clock::now();

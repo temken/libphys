@@ -182,7 +182,7 @@
 		return quantity/dimension;
 	}
 
-	std::vector<double> In_Units(std::vector<double>&  quantities, double dimension)
+	std::vector<double> In_Units(const std::vector<double>&  quantities, double dimension)
 	{
 		std::vector<double> result(quantities.size());
 		for(unsigned int i = 0; i < quantities.size(); i++)
@@ -192,7 +192,7 @@
 		return result;
 	}
 
-	Vector In_Units(Vector& quantities, double dimension)
+	Vector In_Units(const Vector& quantities, double dimension)
 	{
 		Vector result(quantities.Size());
 		for(unsigned int i = 0; i < quantities.Size(); i++)

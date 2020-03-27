@@ -155,6 +155,12 @@
 		}
 		
 	}
+ 	
+ 	double Vector::operator*(Vector v)
+ 	{
+ 		return Dot(v);
+ 	}
+
 
 	Vector Vector::operator*(double s)
 	{
