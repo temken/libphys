@@ -90,9 +90,9 @@
 	//4.2 Distances
 	extern const double rEarth, rSun, AU, pc, kpc, Mpc, ly;
 
-//5. Functions
+//5. Transform quantities to a given dimension
 	extern double In_Units(double quantity, double dimension);
-	extern std::vector<double> In_Units(std::vector<double>&  quantities, double dimension);
-	extern Vector In_Units(Vector& quantities, double dimension);
+	extern std::vector<double> In_Units(const std::vector<double>&  quantities, double dimension);
+	extern Vector In_Units(const Vector& quantities, double dimension);
 
 #endif
