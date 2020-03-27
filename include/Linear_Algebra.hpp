@@ -34,6 +34,7 @@ class Vector
 	// Overloading operators
 		Vector operator+(Vector v);
  		Vector operator-(Vector v);
+ 		double operator*(Vector v);
 		Vector operator*(double s);
 		Vector operator/(double s);
   		Vector operator=(Vector v);
