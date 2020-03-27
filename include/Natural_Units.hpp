@@ -1,6 +1,8 @@
 #ifndef __Natural_Units_hpp_
 #define __Natural_Units_hpp_
 
+#include "Linear_Algebra.hpp"
+
 // 1. SI-prefixes
 	extern const double yotta, zetta, exa, peta, tera, giga, mega, kilo, hecto, deca, deci, centi, milli, micro, nano, pico, femto, atto, zepto, yocto;
 
@@ -90,5 +92,7 @@
 
 //5. Functions
 	extern double In_Units(double quantity, double dimension);
+	extern std::vector<double> In_Units(std::vector<double>&  quantities, double dimension);
+	extern Vector In_Units(Vector& quantities, double dimension);
 
 #endif
