@@ -79,10 +79,8 @@
 		if(file.is_open())
 		{
 			std::string line;
-			// while(!file.eof())
 			while(std::getline(file,line))
 			{
-				// std::string line;
 				line_count++;
 			}
 		    file.close();
@@ -165,6 +163,18 @@
 			}
 		}
 		outputfile.close();
+	}
+
+	void Export_Function(std::string filepath, std::function<double(double)>& func, double xMin, double xMax, unsigned int steps, std::vector<double> dimensions,  bool logarithmic)
+	{
+		std::vector<std::vector<double>> data(steps, std::vector<double>(2,0.0));
+		std::vector<double> arguments = (logarithmic)? Log_Space(xMin, xMax, steps) : Linear_Space(xMin, xMax, steps);
+		for(unsigned int i = 0; i < arguments.size(); i++)
+		{
+			data[i][0] = arguments[i];
+			data[i][1] = func(arguments[i]);
+		}
+		Export_Table(filepath, data, dimensions);
 	}
 
 //3. Create list with equi-distant numbers in log-space
