@@ -95,4 +95,7 @@
 	extern std::vector<double> In_Units(const std::vector<double>&  quantities, double dimension);
 	extern Vector In_Units(const Vector& quantities, double dimension);
 
+//6. Simple physics functions
+	extern double Reduced_Mass(double m1, double m2);
+
 #endif

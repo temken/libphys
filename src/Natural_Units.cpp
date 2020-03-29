@@ -202,3 +202,9 @@
 		return result;
 	}
 
+//6. Simple physics functions
+	double Reduced_Mass(double m1,double m2)
+	{
+		return m1*m2/(m1+m2);
+	}
+
