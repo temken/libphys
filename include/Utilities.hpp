@@ -16,6 +16,7 @@
 	extern void Export_Table(std::string filepath, const std::vector<std::vector<double>>& data, std::vector<double> dimensions = {});
 
 //3. Create list with equi-distant numbers in log-space
+	extern std::vector<double> Linear_Space(double min, double max, unsigned int steps);
 	extern std::vector<double> Log_Space(double min, double max, unsigned int steps);
 
 
