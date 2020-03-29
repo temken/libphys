@@ -24,12 +24,12 @@
 					{
 						if(progress < 0.1)
 						{
-							std::cout<<Round(100.0*progress,1)<<"\%"<<std::flush;
+							std::cout<<Round(100.0*progress,1)<<"%"<<std::flush;
 							i+= (progress < 0.01)? 3 : 1;
 						}
 						else
 						{
-							std::cout<<Round(100.0*progress,2)<<"\%"<<std::flush;
+							std::cout<<Round(100.0*progress,2)<<"%"<<std::flush;
 							i+=2;
 						}
 						

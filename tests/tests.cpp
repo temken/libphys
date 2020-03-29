@@ -18,6 +18,7 @@ int main()
 	std::cout<<v<<std::endl;
 	std::cout<<v*v<<std::endl;
 	
+	Print_Progress_Bar(0.5);
 	//Ending time and computing time
 	std::chrono::high_resolution_clock::time_point time_end = std::chrono::high_resolution_clock::now();
 	double durationTotal =1e-6*std::chrono::duration_cast<std::chrono::microseconds>( time_end - time_start ).count();

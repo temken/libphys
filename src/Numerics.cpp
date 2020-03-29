@@ -394,7 +394,8 @@
 
 		//Compute the Steffen coefficients for the interpolation
 		//1. h and s.
-		double h[N-1],s[N-1];
+		// double h[N-1],s[N-1];
+		std::vector<double> h(N-1), s(N-1);
 		for(unsigned int i=0;i<N-1;i++)
 		{
 			double x_i = data[i][0];
@@ -407,7 +408,8 @@
 		}
 
 		//2. p and dy
-		double dy[N],p[N];
+		// double dy[N],p[N];
+		std::vector<double> dy(N), p(N);
 		for(unsigned int i=0;i<N;i++)
 		{
 			//First point
