@@ -24,12 +24,12 @@
 					{
 						if(progress < 0.1)
 						{
-							std::cout<<Round(100.0*progress,1)<<"\%"<<std::flush;
+							std::cout<<Round(100.0*progress,1)<<"%"<<std::flush;
 							i+= (progress < 0.01)? 3 : 1;
 						}
 						else
 						{
-							std::cout<<Round(100.0*progress,2)<<"\%"<<std::flush;
+							std::cout<<Round(100.0*progress,2)<<"%"<<std::flush;
 							i+=2;
 						}
 						
@@ -79,10 +79,8 @@
 		if(file.is_open())
 		{
 			std::string line;
-			// while(!file.eof())
 			while(std::getline(file,line))
 			{
-				// std::string line;
 				line_count++;
 			}
 		    file.close();
@@ -167,7 +165,31 @@
 		outputfile.close();
 	}
 
+	void Export_Function(std::string filepath, std::function<double(double)>& func, double xMin, double xMax, unsigned int steps, std::vector<double> dimensions,  bool logarithmic)
+	{
+		std::vector<std::vector<double>> data(steps, std::vector<double>(2,0.0));
+		std::vector<double> arguments = (logarithmic)? Log_Space(xMin, xMax, steps) : Linear_Space(xMin, xMax, steps);
+		for(unsigned int i = 0; i < arguments.size(); i++)
+		{
+			data[i][0] = arguments[i];
+			data[i][1] = func(arguments[i]);
+		}
+		Export_Table(filepath, data, dimensions);
+	}
+
 //3. Create list with equi-distant numbers in log-space
+	std::vector<double> Linear_Space(double min, double max, unsigned int steps)
+	{
+		std::vector<double> result;
+		double step = (max-min) / (steps-1.0);
+
+		for(unsigned int i = 0; i<steps; i++)
+		{
+			result.push_back( min + i * step );
+		}
+		return result;
+	}
+
 	std::vector<double> Log_Space(double min, double max, unsigned int steps)
 	{
 		std::vector<double> result;
