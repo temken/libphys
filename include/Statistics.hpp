@@ -41,8 +41,8 @@ extern double Rejection_Sampling(const std::function<double(double)>& PDF,double
 extern double Inverse_Transform_Sampling(const std::function<double(double)>& cdf,double xMin,double xMax,std::mt19937& PRNG);
 
 //3. Likelihoods
-extern double Likelihood_Poisson_Binned(std::vector<double> expectation_values,std::vector<int> observed_events);
-extern double Log_Likelihood_Poisson_Binned(std::vector<double> expectation_values,std::vector<int> observed_events);
+extern double Likelihood_Poisson_Binned(std::vector<double> expectation_values, const std::vector<unsigned long int>& observed_events);
+extern double Log_Likelihood_Poisson_Binned(std::vector<double> expectation_values, const std::vector<unsigned long int>& observed_events);
 
 //4. Data point with statistical weight
 struct DataPoint
