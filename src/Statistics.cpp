@@ -217,7 +217,7 @@
 	}
 
 //3. Likelihoods
-	double Likelihood_Poisson_Binned(std::vector<double> expectation_values,std::vector<int> observed_events)
+	double Likelihood_Poisson_Binned(std::vector<double> expectation_values, const std::vector<unsigned long int>& observed_events)
 	{
 		unsigned int N_Bins = observed_events.size();
 		if(N_Bins != expectation_values.size())
@@ -234,7 +234,7 @@
 		}
 		return likelihood;
 	}
-	double Log_Likelihood_Poisson_Binned(std::vector<double> expectation_values,std::vector<int> observed_events)
+	double Log_Likelihood_Poisson_Binned(std::vector<double> expectation_values, const std::vector<unsigned long int>& observed_events)
 	{
 		unsigned int N_Bins = observed_events.size();
 		if(N_Bins != expectation_values.size())
