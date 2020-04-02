@@ -10,7 +10,7 @@
 	extern double StepFunction(double x);
 	extern double Round(double N,unsigned int digits = 3);
 	extern double Relative_Difference(double a,double b);
-	extern double Floats_Equal(double a, double b, double tol = 1e-10);
+	extern bool Floats_Equal(double a, double b, double tol = 1e-10);
 
 //2. Special functions
 //2.1 Gamma functions

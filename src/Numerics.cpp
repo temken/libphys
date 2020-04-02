@@ -61,7 +61,7 @@
 		return d/max;
 	}
 
-	double Floats_Equal(double a, double b, double tol)
+	bool Floats_Equal(double a, double b, double tol)
 	{
 		if( Relative_Difference(a,b) < tol) return true;
 		else return false;

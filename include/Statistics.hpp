@@ -31,18 +31,26 @@ extern double CDF_Chi_Square(double x, double dof);
 extern double PDF_Chi_Bar_Square(double x, std::vector<double> weights);
 extern double CDF_Chi_Bar_Square(double x, std::vector<double> weights);
 
-//2. Sampling random numbers
-//2.1 Sample from specific distribution
+//1.6 Exponential distribution
+extern double PDF_Exponential(double x, double mean);
+extern double CDF_Exponential(double x, double mean);
+
+//2. Likelihoods
+extern double Likelihood_Poisson(double N_prediction, unsigned long int N_observed, double expected_background = 0.0);
+extern double Log_Likelihood_Poisson(double N_prediction, unsigned long int N_observed, double expected_background = 0.0);
+extern double Likelihood_Poisson_Binned(std::vector<double> N_prediction_binned, const std::vector<unsigned long int>& N_observed_binned, std::vector<double> expected_background_binned = {});
+extern double Log_Likelihood_Poisson_Binned(std::vector<double> N_prediction_binned, const std::vector<unsigned long int>& N_observed_binned, std::vector<double> expected_background_binned = {});
+
+//3. Sampling random numbers
+//3.1 Sample from specific distribution
 extern double Sample_Uniform(std::mt19937& PRNG, double x_min = 0.0, double x_max = 1.0);
 extern int Sample_Poisson(std::mt19937& PRNG, double expectation_value);
 
-//2.2 General sampling algorithms
+//3.2 General sampling algorithms
 extern double Rejection_Sampling(const std::function<double(double)>& PDF,double xMin,double xMax,double yMax,std::mt19937& PRNG);
 extern double Inverse_Transform_Sampling(const std::function<double(double)>& cdf,double xMin,double xMax,std::mt19937& PRNG);
 
-//3. Likelihoods
-extern double Likelihood_Poisson_Binned(std::vector<double> expectation_values, const std::vector<unsigned long int>& observed_events);
-extern double Log_Likelihood_Poisson_Binned(std::vector<double> expectation_values, const std::vector<unsigned long int>& observed_events);
+
 
 //4. Data point with statistical weight
 struct DataPoint
