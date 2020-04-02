@@ -134,7 +134,59 @@
 		}
 	}
 
-//2. Sampling random numbers
+	//1.6 Exponential distribution
+	double PDF_Exponential(double x, double mean)
+	{
+		return 1.0 / mean * exp(-1.0 / mean * x);
+	}
+
+	double CDF_Exponential(double x, double mean)
+	{
+		return 1.0 - exp(-1.0 / mean * x);
+	}
+
+//2. Likelihoods
+	double Log_Likelihood_Poisson(double N_prediction, unsigned long int N_observed, double expected_background)
+	{
+		double log_N_obs_factorial = 0.0;
+		for(int j=1; j<= N_observed; j++) log_N_obs_factorial += log(j);
+		
+		return N_observed * log(N_prediction + expected_background) - log_N_obs_factorial - (N_prediction + expected_background);
+	}
+
+	double Likelihood_Poisson(double N_prediction, unsigned long int N_observed, double expected_background)
+	{
+		return exp(Log_Likelihood_Poisson(N_prediction, N_observed, expected_background));
+	}
+
+	double Log_Likelihood_Poisson_Binned(std::vector<double> N_prediction_binned, const std::vector<unsigned long int>& N_observed_binned, std::vector<double> expected_background_binned )
+	{
+		unsigned int N_bins = N_prediction_binned.size();
+		if(expected_background_binned.empty()) expected_background_binned = std::vector<double>(N_bins, 0.0);
+		if(N_observed_binned.size() != N_bins || expected_background_binned.size() != N_bins)
+		{
+			std::cerr <<"Error in Log_Likelihood_Poisson_Binned(): Predicted signals, observed events, and/or expected background are not of equal size."<<std::endl;
+			std::exit(EXIT_FAILURE);
+		}
+		else
+		{
+			double log_likelihood = 0.0;
+			for(unsigned int i = 0; i < N_bins; i++)
+			{
+				log_likelihood += Log_Likelihood_Poisson(N_prediction_binned[i], N_observed_binned[i], expected_background_binned[i]);
+			}
+			return log_likelihood;
+		}
+	}
+
+
+	double Likelihood_Poisson_Binned(std::vector<double> N_prediction_binned, const std::vector<unsigned long int>& N_observed_binned, std::vector<double> expected_background_binned)
+	{
+		return exp( Log_Likelihood_Poisson_Binned(N_prediction_binned, N_observed_binned, expected_background_binned) );
+	}
+
+
+//3. Sampling random numbers
 	// Real random number which is used as a seed for the PRNG:
 	std::random_device rd;
 	//The PRNG:
@@ -142,7 +194,7 @@
 	//Propability:
 	std::uniform_real_distribution<double> Sample_Xi(0,1);
 
-	//2.1 Sample from specific distribution
+	//3.1 Sample from specific distribution
 	double Sample_Uniform(std::mt19937& PRNG, double x_min, double x_max)
 	{
 		return x_min + Sample_Xi(PRNG) * (x_max - x_min);
@@ -176,7 +228,7 @@
 		return (k-1);
 	}
 
-	//2.2 General sampling algorithms
+	//3.2 General sampling algorithms
 	double Rejection_Sampling(const std::function<double(double)>& PDF,double xMin,double xMax,double yMax,std::mt19937& PRNG)
 	{
 		bool success = false;
@@ -214,45 +266,6 @@
 			return xi-cdf(x);
 		};
 		return Find_Root(fct,xMin,xMax,1e-10*(xMax-xMin));
-	}
-
-//3. Likelihoods
-	double Likelihood_Poisson_Binned(std::vector<double> expectation_values, const std::vector<unsigned long int>& observed_events)
-	{
-		unsigned int N_Bins = observed_events.size();
-		if(N_Bins != expectation_values.size())
-		{
-			std::cerr <<"Error in Likelihood_Poisson_Binned(): Expectation values and observed events for bins are not of equal size."<<std::endl;
-			std::exit(EXIT_FAILURE);
-		}
-		double likelihood = 1.0;
-		for(unsigned int bin = 0; bin < N_Bins; bin++)
-		{
-			int N_Observed = observed_events[bin];
-			double N_Expected = expectation_values[bin];
-			likelihood *= pow(N_Expected,N_Observed) / Factorial(N_Observed) * exp(-1.0*N_Expected);
-		}
-		return likelihood;
-	}
-	double Log_Likelihood_Poisson_Binned(std::vector<double> expectation_values, const std::vector<unsigned long int>& observed_events)
-	{
-		unsigned int N_Bins = observed_events.size();
-		if(N_Bins != expectation_values.size())
-		{
-			std::cerr <<"Error in Log_Likelihood_Poisson_Binned(): Expectation values and observed events for bins are not of equal size."<<std::endl;
-			std::exit(EXIT_FAILURE);
-		}
-		double log_likelihood = 0.0;
-		for(unsigned int bin = 0; bin < N_Bins; bin++)
-		{
-			int N_Observed = observed_events[bin];
-			double N_Expected = expectation_values[bin];
-			log_likelihood += N_Observed * log(N_Expected) - N_Expected;
-			double aux = 0.0;
-			for(int j=1; j<= N_Observed; j++) aux += log(j);
-			log_likelihood -= aux;
-		}
-		return log_likelihood;
 	}
 
 //4. Data point with statistical weight
