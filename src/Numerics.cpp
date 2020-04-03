@@ -1,5 +1,5 @@
 //Disclaimer:
-//Some of the function implemenations were made with the help of the 
+//Some of the function implementations were made with the help of the 
 //"Numerical Recipes 3rd Edition: The Art of Scientific Computing"
 //by William H. Press, Saul A. Teukolsky, William T. Vetterling, Brian P. Flannery
 
@@ -14,15 +14,15 @@
 //1. Simple functions
 	int Sign(double arg)
 	{
-		if(arg>0.0) 		return 1;
-		else if(arg==0.0)	return 0;
+		if(arg > 0.0) 		return 1;
+		else if(arg == 0.0)	return 0;
 		else 				return -1;
 	}
 
 	double Sign(double x, double y)
 	{
 		if(Sign(x) == Sign(y)) return x;
-		else return -1.0*x;
+		else return -1.0 * x;
 	}
 
 	double StepFunction(double x)
@@ -33,7 +33,7 @@
 
 	double Round(double N,unsigned int digits)
 	{
-		if(N==0) return 0;
+		if(N == 0) return 0;
 		if(digits>5)
 		{
 			std::cerr <<"Error in Round(): Significant digits > 5."<<std::endl;
@@ -41,7 +41,7 @@
 		}
 		//Make the argument a positive number.
 		double sign = Sign(N);
-		N*=sign;
+		N *= sign;
 		
 		//Cut off the decimal power
 		double DecimalPower = floor( log10(N) );
@@ -58,7 +58,7 @@
 	{
 		double d = std::fabs(a-b);
 		double max = std::max(fabs(a),fabs(b));
-		return d/max;
+		return d / max;
 	}
 
 	bool Floats_Equal(double a, double b, double tol)
@@ -71,16 +71,16 @@
 	std::vector<double> FactorialList= {1.0};
 	double Factorial(unsigned int n)
 	{
-		if (n>170)
+		if (n > 170)
 		{
 
 			std::cerr <<"Error in Factorial: Overflow for " <<n <<"!."<<std::endl;
 			std::exit(EXIT_FAILURE);
 		}
-		else if(n<FactorialList.size()) return FactorialList[n];
+		else if(n < FactorialList.size()) return FactorialList[n];
 		else
 		{
-			while(FactorialList.size()<=n)
+			while(FactorialList.size() <= n)
 			{
 				FactorialList.push_back( FactorialList.back()*FactorialList.size());
 			}
@@ -90,37 +90,37 @@
 
 	double Binomial_Coefficient(int n,int k)
 	{
-		if(k<0 ||n<0 )
+		if(k < 0 || n < 0)
 		{
 			std::cerr <<"Warning in BinomialCoefficient(): negative arguments. Return 0." <<std::endl;
 			std::exit(EXIT_FAILURE);
 		}
-		else if(n<k)	return 0;
-		else if (n>170)
+		else if(n < k)	return 0;
+		else if (n > 170)
 		{
-			return floor(0.5+exp(GammaLn(n+1.0)-GammaLn(k+1.0)-GammaLn(n-k+1.0)));
+			return floor( 0.5 + exp(GammaLn(n+1.0)-GammaLn(k+1.0)-GammaLn(n-k+1.0)) );
 		}
-		else	return floor(0.5+Factorial(n)/Factorial(k)/Factorial(n-k));
+		else return floor( 0.5 + Factorial(n)/Factorial(k)/Factorial(n-k) );
 	}
 
 	//Logarithmic gamma function
 	double GammaLn(double x)
 	{
 		double cof[14] = {57.1562356658629235,-59.5979603554754912, 14.1360979747417471,-0.491913816097620199,.339946499848118887e-4, .465236289270485756e-4,-.983744753048795646e-4,.158088703224912494e-3, -.210264441724104883e-3,.217439618115212643e-3,-.164318106536763890e-3, .844182239838527433e-4,-.261908384015814087e-4,.368991826595316234e-5};
-		if(x<=0)
+		if(x <= 0)
 		{
 			std::cerr<<"Error in GammaLn(x): x<=0."<<std::endl;
 			std::exit(EXIT_FAILURE);
 		}
 		double sum = 0.999999999999997092;
 		double y = x;
-		double tmp = x+671.0/128.0;
-		tmp = (x+0.5)*log(tmp)-tmp;
-		for(int j=0;j<14;j++)
+		double tmp = x + 671.0 / 128.0;
+		tmp = (x+0.5) * log(tmp) - tmp;
+		for(int j = 0; j < 14; j++)
 		{
-			sum+=cof[j]/++y;
+			sum += cof[j] / ++y;
 		}
-		return tmp+log(2.5066282746310005*sum/x);
+		return tmp + log(2.5066282746310005*sum/x);
 	}
 
 	double Gamma(double x)
@@ -144,7 +144,7 @@
 	{
 		//Compute P(x,a)
 			double gammaP;
-			double gln=GammaLn(a);
+			double gln = GammaLn(a);
 			//How far to integrate N sqrt(a) around the peak at a-1:
 				double N = 10;
 				double tPeak = a-1.0;
@@ -177,16 +177,16 @@
 	{
 		double eps = std::numeric_limits<double>::epsilon();
 		double sum,del,ap;
-		double gln=GammaLn(a);
+		double gln = GammaLn(a);
 		ap = a;
 		del = sum = 1.0/a;
 		while(fabs(del)>fabs(sum)*eps)
 		{
 			ap++;
-			del*=x/ap;
-			sum+=del;
+			del *= x/ap;
+			sum += del;
 		}
-		return sum*exp(-x+a*log(x)-gln);
+		return sum * exp(-x + a*log(x) - gln);
 	}
 
 	//Continued fraction representation of Q(x,a)
@@ -195,75 +195,77 @@
 		//Precision
 			double eps = std::numeric_limits<double>::epsilon();
 			double FPMIN = std::numeric_limits<double>::min()/eps;
-		double del=0.0;
-		double gln=GammaLn(a);
+		double del = 0.0;
+		double gln = GammaLn(a);
 		double b = x+1.0-a;
-		double c=1.0/FPMIN;
+		double c = 1.0/FPMIN;
 		double d = 1.0/b;
-		double h=d;
-		int i=1;
-		while(fabs(del-1.0)>eps)
+		double h = d;
+		int i = 1;
+		while(fabs(del-1.0) > eps)
 		{
 			double an = -1.0*i*(i-a);
-			b+=2.0;
-			d=an*d+b;
-			if(fabs(d)<FPMIN) d=FPMIN;
-			c=b+an/c;
-			if(fabs(c)<FPMIN) c =FPMIN;
-			d=1.0/d;
-			del=d*c;
-			h*=del;
+			b += 2.0;
+			d = an*d+b;
+			if(fabs(d) < FPMIN) d = FPMIN;
+			c = b + an / c;
+			if(fabs(c)<FPMIN) c = FPMIN;
+			d = 1.0/d;
+			del = d*c;
+			h *= del;
 		}
-		return exp(-x+a*log(x)-gln)*h;
+		return exp(-x + a*log(x) - gln) * h;
 	}
 
 	//Final function using different methods for different parts of the domain
 	double GammaQ(double x,double a)
 	{
-		double aMax=100.0;
-		if(x<0.0||a<=0.0)
+		double aMax = 100.0;
+		if(x < 0.0 || a <= 0.0)
 		{
 			std::cerr <<"Error in GammaQ("<<x<<","<<a<<"): Invalid arguments."<<std::endl;
 			std::exit(EXIT_FAILURE);
 		}
-		else if(x==0)return 1.0;
-		else if (a>aMax) return GammaQint(x,a);
-		else if (x<a+1.0) return 1.0-GammaPser(x,a);
+		else if(x == 0)return 1.0;
+		else if (a > aMax) return GammaQint(x,a);
+		else if (x < a+1.0) return 1.0-GammaPser(x,a);
 		else return GammaQcf(x,a);
 	}
 
 	double GammaP(double x,double a)
 	{
-		return 1.0-GammaQ(x,a);
+		return 1.0 - GammaQ(x,a);
 	}
 				
 	//Inverse incomplete gamma function. (Solves P(x,a)=p for x.)
 	double Inv_GammaP(double p,double a)
 	{
 		//Check the arguments
-			if(a<=0.0)
-			{
-				std::cerr <<"Error in Inv_GammaP(): a must be positive."<<std::endl;
-				std::exit(EXIT_FAILURE);
-			}
-			if(p>=1.0) return std::max(100.0,a+100.*sqrt(a));
-			if(p<=0.0) return 0.0;
-		//Parameter
-			double x;
-			double gln=GammaLn(a);
-			double a1=a-1.0;
-			double lna1 = log(a1);
-			double afac = exp(a1*(lna1-1.0)-gln);
-		//Initial guess 1
-			if(a>1.0)
-			{
-				double pp = (p<0.5)? p : 1.0-p;
-				double t = sqrt(-2.0*log(pp));
-				x = (2.30753+t*0.27061)/(1.+t*(0.99229+t*0.04481)) - t;
-				if(p<0.5) x=-x;
-				x = std::max(1.0e-3,a*pow(1.0-1.0/(9.*a)-x/(3.*sqrt(a)),3.0));
+		if(a <= 0.0)
+		{
+			std::cerr <<"Error in Inv_GammaP(): a must be positive."<<std::endl;
+			std::exit(EXIT_FAILURE);
+		}
+		if(p >= 1.0) return std::max(100.0,a + 100.*sqrt(a));
+		if(p <= 0.0) return 0.0;
 
-			}
+		//Parameter
+		double x;
+		double gln = GammaLn(a);
+		double a1 = a - 1.0;
+		double lna1 = log(a1);
+		double afac = exp(a1*(lna1-1.0) - gln);
+
+		//Initial guess 1
+		if(a > 1.0)
+		{
+			double pp = (p<0.5)? p : 1.0-p;
+			double t = sqrt(-2.0*log(pp));
+			x = (2.30753 + t*0.27061) / (1. + t*(0.99229 + t*0.04481)) - t;
+			if(p < 0.5) x = -x;
+			x = std::max( 1.0e-3, a * pow(1.0 - 1.0/(9.*a) - x/(3.*sqrt(a)),3.0) );
+
+		}
 		//Initial guess 2
 			else
 			{
@@ -273,15 +275,15 @@
 			}
 		//Halley's method
 			double EPS = 1.0e-8;
-			for(int i=0;i<12;i++)
+			for(int i = 0; i < 12; i++)
 			{
-				if(x<=0.0) return 0.0;
+				if(x <= 0.0) return 0.0;
 				double error = GammaP(x,a) - p;
 				double t;
 				if(a>1.0) t = afac*exp(-(x-a1)+a1*(log(x)-lna1));
 				else t = exp(-x+a1*log(x)-gln);
 				double u = error/t;
-				x-= (t = u/(1.-0.5*std::min(1.,u*((a-1.)/x - 1))));
+				x -= (t = u/(1.-0.5*std::min(1.,u*((a-1.)/x - 1))));
 				if (x <= 0.) x = 0.5*(x + t);
 				if (fabs(t) < EPS*x ) break;
 			}
@@ -297,12 +299,12 @@
 	double Inv_erf(double p)
 	{
 		// return inverfc(1.-p);
-		if(fabs(p-1.0)<1e-16)
+		if(fabs(p-1.0) < 1e-16)
 		{
 			std::cerr <<"Warning in Inv_erf(double): The argument p = "<<p <<" is very close to 1.0. Return 10."<<std::endl;
 			return 10.0;
 		}
-		else if(fabs(p)>=1.0)
+		else if(fabs(p) >= 1.0)
 		{
 			std::cerr <<"Error in Inv_erf(): Invalid argument |p| = |"<<p <<"| > 1"<<std::endl;
 			std::exit(EXIT_FAILURE);
@@ -340,8 +342,8 @@
 		double h = b-a;
 		double d = (a+c)/2;
 		double e = (b+c)/2;
-		double fd=func(d);
-		double fe=func(e);
+		double fd = func(d);
+		double fe = func(e);
 		double Sleft = (h/12)*(fa + 4*fd + fc);                                                           
 		double Sright = (h/12)*(fc + 4*fe + fb);                                                          
 		double S2 = Sleft + Sright; 
@@ -360,8 +362,8 @@
 	double Integrate(std::function<double(double)> func, double a,double b, double epsilon,int maxRecursionDepth)
 	{
 		int sign = +1;
-		if(a==b) return 0.0;
-		else if(a>b)
+		if(a == b) return 0.0;
+		else if(a > b)
 		{
 			double aux = a;
 			a = b;
@@ -379,7 +381,7 @@
 			if(warning)   
 			{
 				std::cout <<"Warning in Integrate(): Numerical integration on the interval ("<<a<<","<<b<<") did not converge to the desired precision." <<std::endl;
-				std::cout <<"\tDesired precision: " <<fabs(epsilon) <<" Result: " <<result<<std::endl;;
+				std::cout <<"\tDesired precision: " <<Round(fabs(epsilon)) <<" Result: " <<Round(result)<<std::endl;
 			}
 		if(std::isnan(result)) std::cout <<"Warning in Integrate(): Result is nan."<<std::endl;
 		else if(std::isinf(result)) std::cout <<"Warning in Integrate(): Result is inf."<<std::endl;
@@ -390,13 +392,13 @@
 //4.1 One-dimensional interpolation
 	void Interpolation::Compute_Steffen_Coefficients(std::vector<std::vector<double>>& data, std::vector<double> &a,std::vector<double> &b,std::vector<double> &c,std::vector<double> &d)
 	{
-		unsigned int N= data.size();
+		unsigned int N = data.size();
 
 		//Compute the Steffen coefficients for the interpolation
 		//1. h and s.
 		// double h[N-1],s[N-1];
 		std::vector<double> h(N-1), s(N-1);
-		for(unsigned int i=0;i<N-1;i++)
+		for(unsigned int i = 0; i < N-1; i++)
 		{
 			double x_i = data[i][0];
 			double x_ip1 = data[i+1][0];
@@ -404,22 +406,22 @@
 			double y_i = data[i][1];
 			double y_ip1 = data[i+1][1];
 			h[i] = x_ip1-x_i;
-			s[i]= (y_ip1-y_i)/h[i];
+			s[i] = (y_ip1-y_i)/h[i];
 		}
 
 		//2. p and dy
 		// double dy[N],p[N];
 		std::vector<double> dy(N), p(N);
-		for(unsigned int i=0;i<N;i++)
+		for(unsigned int i = 0; i < N; i++)
 		{
 			//First point
-			if(i==0)
+			if(i == 0)
 			{
 				p[i] = s[i]*(1.0+h[i]/(h[i]+h[i+1]))-s[i+1]*h[i]/(h[i]+h[i+1]);
 				dy[i] = (Sign(p[i])+Sign(s[i]))*std::min(1.0*fabs(s[i]),0.5*fabs(p[i]));
 			}
 			//Last point
-			else if(i==N-1)
+			else if(i == N-1)
 			{
 				p[i] = s[i-1]*(1.0+h[i-1]/(h[i-1]+h[i-2]))-s[i-2]*h[i-1]/(h[i-1]+h[i-2]);
 				dy[i] = (Sign(p[i])+Sign(s[i-1]))*std::min(1.0*fabs(s[i-1]),0.5*fabs(p[i]));
@@ -433,7 +435,7 @@
 		}
 
 		//3. a,b,c, and d
-		for(unsigned int i=0;i<N-1;i++)
+		for(unsigned int i = 0; i < N-1; i++)
 		{
 			a.push_back((dy[i]+dy[i+1]-2.0*s[i])/pow(h[i],2.0));
 			b.push_back((3.0*s[i]-2.0*dy[i]-dy[i+1])/h[i]);
@@ -451,7 +453,7 @@
 		{
 			int jm = (jRight+jLeft) >>1 ;
 			if (x >= TabulatedData[jm][0])	jLeft=jm;
-			else jRight=jm;
+			else jRight = jm;
 		}
 		return jLeft;
 	}
@@ -516,7 +518,7 @@
 	// Find j such that list[j]<x<list[j+1]
 	unsigned int Interpolation::Locate(double x)
 	{
-		if( ((xDomain[0]-x)>0.0) || ((x-xDomain[1])>0.0) )
+		if( ((xDomain[0]-x) > 0.0) || ((x-xDomain[1]) > 0.0) )
 		{
 			printf("\nError in Interpolation::Locate(): x = %e lies outside the domain [%e,%e].\n\n",x,xDomain[0],xDomain[1]);
 			std::exit(EXIT_FAILURE);
@@ -526,7 +528,7 @@
 			//Use Bisection() or the Hunt method, depending of the last calls were correlated.
 			unsigned int j = corr ? Hunt(x): Bisection(x,0,N_Data-1);
 			//Check if the points are still correlated.
-			corr=(fabs((j-jLast))<10);
+			corr = (fabs((j-jLast))<10);
 
 			jLast = j;
 			return j;
@@ -596,7 +598,7 @@
 	Interpolation::Interpolation(const std::vector<std::vector<double>>& data,double dim1,double dim2)
 	{
 		preFactor = 1.0;
-		for(unsigned int i =0;i<data.size();i++)
+		for(unsigned int i = 0; i < data.size(); i++)
 		{
 			std::vector<double> aux ={data[i][0]*dim1,data[i][1]*dim2};
 			TabulatedData.push_back(aux);
