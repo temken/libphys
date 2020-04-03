@@ -180,25 +180,35 @@
 //3. Create list with equi-distant numbers in log-space
 	std::vector<double> Linear_Space(double min, double max, unsigned int steps)
 	{
-		std::vector<double> result;
-		double step = (max-min) / (steps-1.0);
-
-		for(unsigned int i = 0; i<steps; i++)
+		if(steps < 2 || min == max) return {min};
+		else
 		{
-			result.push_back( min + i * step );
+			std::vector<double> result;
+			double step = (max-min) / (steps-1.0);
+
+			for(unsigned int i = 0; i<steps; i++)
+			{
+				result.push_back( min + i * step );
+			}
+			return result;
 		}
-		return result;
+		
 	}
 
 	std::vector<double> Log_Space(double min, double max, unsigned int steps)
 	{
-		std::vector<double> result;
-		double logmin = log(min);
-		double dlog = log(max/min) / (steps-1.0);
-
-		for(unsigned int i = 0; i<steps; i++)
+		if(steps < 2 || min == max) return {min};
+		else
 		{
-			result.push_back( exp(logmin + i*dlog) );
+			std::vector<double> result;
+			double logmin = log(min);
+			double dlog = log(max/min) / (steps-1.0);
+
+			for(unsigned int i = 0; i<steps; i++)
+			{
+				result.push_back( exp(logmin + i*dlog) );
+			}
+			return result;
 		}
-		return result;
+		
 	}
