@@ -674,7 +674,7 @@
     }
 //5. Root finding
 	//Root finding with Ridder's method
-	double Find_Root(std::function<double(double)>& func,double xLeft, double xRight,double xAccuracy)
+	double Find_Root(std::function<double(double)> func,double xLeft, double xRight,double xAccuracy)
 	{
 		const int Max_Iterations = 50;
 		//1. Check if xLeft<xRight, otherwise swap.

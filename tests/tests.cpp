@@ -8,6 +8,8 @@
 #include "Statistics.hpp"
 #include "Utilities.hpp"
 
+double func(double x){return sin(x);}
+
 int main()
 {
 	//Starting time
@@ -18,6 +20,9 @@ int main()
 	std::cout<<v<<std::endl;
 	std::cout<<v*v<<std::endl;
 	
+	double x = Find_Root(func, 1, 10, 1e-5);
+	std::cout<<x<<std::endl;
+
 	Print_Progress_Bar(0.5);
 	//Ending time and computing time
 	std::chrono::high_resolution_clock::time_point time_end = std::chrono::high_resolution_clock::now();

@@ -76,7 +76,7 @@
 			    void Save_Function(std::string filename,unsigned int points);
 	};
 //5. Root finding
-	extern double Find_Root(std::function<double(double)>& func,double xLeft, double xRight,double epsilon);
+	extern double Find_Root(std::function<double(double)> func,double xLeft, double xRight,double epsilon);
 
 //6. Minimization
 //6.1 Multi-dimensional
