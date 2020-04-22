@@ -191,6 +191,36 @@
 		}
 		return result;
 	}
+	std::vector<std::vector<double>> In_Units(const std::vector<std::vector<double>>&  quantities, double dimension)
+	{
+		std::vector<std::vector<double>> result(quantities.size());
+		for(unsigned int i = 0; i < quantities.size(); i++)
+		{
+			result.push_back(In_Units(quantities[i],dimension));
+		}
+		return result;
+	}
+
+	std::vector<std::vector<double>> In_Units(const std::vector<std::vector<double>>&  quantities, std::vector<double> dimensions)
+	{
+		std::vector<std::vector<double>> result(quantities.size(), std::vector<double>(dimensions.size(),0.0));
+		for(unsigned int i = 0; i < quantities.size(); i++)
+		{
+			if(quantities[i].size() != dimensions.size())
+			{
+				std::cerr <<"Error in In_Units(const std::vector<std::vector<double>>&,std::vector<double>): Dimensions of arrays are not consistent."<<std::endl;
+				std::exit(EXIT_FAILURE);
+			}
+			else
+			{
+				for(unsigned int j = 0; j < quantities[j].size(); j++)
+				{
+					result[i][j] = In_Units(quantities[i][j],dimensions[j]);
+				}
+			}
+		}
+		return result;
+	}
 
 	Vector In_Units(const Vector& quantities, double dimension)
 	{
@@ -201,6 +231,13 @@
 		}
 		return result;
 	}
+
+
+	Matrix In_Units(const Matrix& quantities, double dimension)
+	{
+		return 1.0/dimension * quantities;
+	}
+
 
 //6. Simple physics functions
 	double Reduced_Mass(double m1,double m2)

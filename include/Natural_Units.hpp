@@ -93,7 +93,10 @@
 //5. Transform quantities to a given dimension
 	extern double In_Units(double quantity, double dimension);
 	extern std::vector<double> In_Units(const std::vector<double>&  quantities, double dimension);
+	extern std::vector<std::vector<double>> In_Units(const std::vector<std::vector<double>>&  quantities, double dimension);
+	extern std::vector<std::vector<double>> In_Units(const std::vector<std::vector<double>>&  quantities, std::vector<double> dimensions);
 	extern Vector In_Units(const Vector& quantities, double dimension);
+	extern Matrix In_Units(const Matrix& quantities, double dimension);
 
 //6. Simple physics functions
 	extern double Reduced_Mass(double m1, double m2);
